@@ -9,5 +9,10 @@
     - `PG_DATABASE=recipe_app`
     - `PG_USER=postgres`
 3. Install project dependencies with `npm install`
-4. Run the server with `npm run listen` or, If **nodemon** is istalled, use `npm start`
 
+## Commands
+- `npm run start`: to run the server
+- `npm run watch`: to run the server using nodemon
+- `npm run db:init`: to initialize the database
+- `npm run db:seed`: to seed the database
+- `npm run dev`: to initialize and seed the databa
