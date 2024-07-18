@@ -1,4 +1,4 @@
--- db/schema.sql
+image-- db/schema.sql
 DROP DATABASE IF EXISTS recipe_app;
 CREATE DATABASE recipe_app;
 
@@ -12,6 +12,6 @@ CREATE TABLE recipes (
   "instructions" TEXT[] NOT NULL,
   "serving" INTEGER ,
   "prepare_time" INTEGER,
-  "is_favourite" BOOLEAN DEFAULT FALSE
+  "is_favorite" BOOLEAN DEFAULT FALSE
 );
 
