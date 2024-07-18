@@ -8,8 +8,8 @@ CREATE TABLE recipes (
   "id" SERIAL PRIMARY KEY,
   "name" TEXT NOT NULL,
   "image" TEXT,
-  "ingredients" TEXT[] NOT NULL,
-  "instructions" TEXT[] NOT NULL,
+  "ingredients" TEXT ARRAY NOT NULL,
+  "instructions" TEXT ARRAY NOT NULL,
   "serving" INTEGER ,
   "prepare_time" INTEGER,
   "is_favorite" BOOLEAN DEFAULT FALSE
