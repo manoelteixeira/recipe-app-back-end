@@ -7,6 +7,7 @@ const {
   getRecipeByID,
   deleteRecipe,
   createRecipe,
+  updateRecipe,
 } = require("../queries/recipeQueries");
 
 const {
@@ -21,6 +22,7 @@ const {
 
 recipes.get("/", async (req, res) => {
   const allRecipes = await getAllRecipes();
+
   if (allRecipes[0]) {
     res.status(200).json(allRecipes);
   } else {
@@ -57,6 +59,27 @@ recipes.post(
   validateIsFavorite,
   async (req, res) => {
     const recipe = await createRecipe(req.body);
+    if (recipe.id) {
+      res.status(200).json(recipe);
+    } else {
+      res.status(500).json({ error: "Someting went wrong!" });
+    }
+  }
+);
+
+recipes.put(
+  "/:id",
+  validateName,
+  validateImage,
+  validateIngredients,
+  validateInstructions,
+  validateServing,
+  validatePrepareTime,
+  validateIsFavorite,
+  async (req, res) => {
+    const { id } = req.params;
+    const recipe = await updateRecipe(id, req.body);
+    console.log(req.body);
     if (recipe.id) {
       res.status(200).json(recipe);
     } else {

@@ -43,4 +43,25 @@ async function createRecipe(recipe) {
   }
 }
 
-module.exports = { getAllRecipes, getRecipeByID, deleteRecipe, createRecipe };
+async function updateRecipe(id, recipe) {
+  const keys = Object.keys(recipe).filter((key) => recipe[key] != undefined);
+  const queryStr =
+    "UPDATE recipes SET " +
+    `${keys.map((key) => `${key}=$[${key}]`).join(", ")} ` +
+    "WHERE id=$[id] RETURNING *;";
+  try {
+    const updatedRecipe = await db.one(queryStr, { ...recipe, id: id });
+
+    return updatedRecipe;
+  } catch (error) {
+    return error;
+  }
+}
+
+module.exports = {
+  getAllRecipes,
+  getRecipeByID,
+  deleteRecipe,
+  createRecipe,
+  updateRecipe,
+};

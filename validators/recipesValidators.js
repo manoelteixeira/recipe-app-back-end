@@ -1,7 +1,10 @@
 // validators/recipesValidators.jsvalidators/recipesValidators.js
 
 function validateName(req, res, next) {
-  if (!req.body.name) {
+  if (req.method != "POST" && !req.body.name) {
+    req.body.name = undefined;
+    next();
+  } else if (!req.body.name) {
     res.status(400).json({ error: "name is required." });
   } else if (typeof req.body.name != "string") {
     res.status(400).json({ error: "name must be a string" });
@@ -20,7 +23,10 @@ function validateImage(req, res, next) {
   }
 }
 function validateIngredients(req, res, next) {
-  if (!req.body.ingredients) {
+  if (req.method != "POST" && !req.body.ingredients) {
+    req.body.ingredients = undefined;
+    next();
+  } else if (!req.body.ingredients) {
     res.status(400).json({ error: "ingredients is required." });
   } else if (!Array.isArray(req.body.ingredients)) {
     res.status(400).json({ error: "ingredients must be an array." });
@@ -31,7 +37,10 @@ function validateIngredients(req, res, next) {
   }
 }
 function validateInstructions(req, res, next) {
-  if (!req.body.instructions) {
+  if (req.method != "POST" && !req.body.name) {
+    req.body.name = undefined;
+    next();
+  } else if (!req.body.instructions) {
     res.status(400).json({ error: "instructions is required." });
   } else if (!Array.isArray(req.body.instructions)) {
     res.status(400).json({ error: "instructions must be an array." });
@@ -67,7 +76,8 @@ function validatePrepareTime(req, res, next) {
 }
 
 function validateIsFavorite(req, res, next) {
-  if (!req.body.is_favorite) {
+  if (req.body.is_favorite == undefined) {
+    console.log("ok");
     req.body.is_favorite = undefined;
     next();
   } else if (typeof req.body.is_favorite != "boolean") {
