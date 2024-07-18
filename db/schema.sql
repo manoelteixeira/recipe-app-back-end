@@ -1,4 +1,4 @@
-image-- db/schema.sql
+
 DROP DATABASE IF EXISTS recipe_app;
 CREATE DATABASE recipe_app;
 
