@@ -30,4 +30,17 @@ async function deleteRecipe(id) {
   }
 }
 
-module.exports = { getAllRecipes, getRecipeByID, deleteRecipe };
+async function createRecipe(recipe) {
+  const queryStr =
+    "INSERT INTO recipes(name, image, ingredients, instructions, serving, prepare_time, is_favorite) VALUES " +
+    "($[name], $[image], $[ingredients], $[instructions], $[serving], $[prepare_time], $[is_favorite]) " +
+    "RETURNING *;";
+  try {
+    const newRecipe = db.one(queryStr, recipe);
+    return newRecipe;
+  } catch (error) {
+    return error;
+  }
+}
+
+module.exports = { getAllRecipes, getRecipeByID, deleteRecipe, createRecipe };

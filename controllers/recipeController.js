@@ -6,7 +6,18 @@ const {
   getAllRecipes,
   getRecipeByID,
   deleteRecipe,
+  createRecipe,
 } = require("../queries/recipeQueries");
+
+const {
+  validateName,
+  validateImage,
+  validateIngredients,
+  validateInstructions,
+  validateServing,
+  validatePrepareTime,
+  validateIsFavorite,
+} = require("../validators/recipesValidators");
 
 recipes.get("/", async (req, res) => {
   const allRecipes = await getAllRecipes();
@@ -34,5 +45,24 @@ recipes.delete("/:id", async (req, res) => {
     res.status(404).json({ error: "Recipe not Found." });
   }
 });
+
+recipes.post(
+  "/",
+  validateName,
+  validateImage,
+  validateIngredients,
+  validateInstructions,
+  validateServing,
+  validatePrepareTime,
+  validateIsFavorite,
+  async (req, res) => {
+    const recipe = await createRecipe(req.body);
+    if (recipe.id) {
+      res.status(200).json(recipe);
+    } else {
+      res.status(500).json({ error: "Someting went wrong!" });
+    }
+  }
+);
 
 module.exports = recipes;
