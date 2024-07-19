@@ -92,8 +92,7 @@ recipes.put(
     const recipe = await updateRecipe(id, req.body);
     if (recipe.id) {
       res.status(200).json(recipe);
-    }
-    if (recipe.received == 0) {
+    } else if (recipe.received == 0) {
       res.status(404).json({ error: "Recipe not Found." });
     } else {
       res.status(500).json({ error: "Internal Server Error." });
