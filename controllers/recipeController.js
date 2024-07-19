@@ -8,6 +8,7 @@ const {
   deleteRecipe,
   createRecipe,
   updateRecipe,
+  searchRecipeByIngredient,
 } = require("../queries/recipeQueries");
 
 const {
@@ -21,9 +22,15 @@ const {
 } = require("../validators/recipesValidators");
 
 recipes.get("/", async (req, res) => {
-  const allRecipes = await getAllRecipes();
+  let allRecipes = [];
 
-  if (allRecipes[0]) {
+  if (req.query.ingredients) {
+    const ingredients = req.query.ingredients.split(" ");
+    allRecipes = await searchRecipeByIngredient(ingredients);
+  } else {
+    allRecipes = await getAllRecipes();
+  }
+  if (Array.isArray(allRecipes)) {
     res.status(200).json(allRecipes);
   } else {
     res.status(500).json({ error: "Internal Server Error." });
@@ -34,8 +41,10 @@ recipes.get("/:id", async (req, res) => {
   const recipe = await getRecipeByID(req.params.id);
   if (recipe.id) {
     res.status(200).json(recipe);
-  } else {
+  } else if (recipe.received == 0) {
     res.status(404).json({ error: "Recipe not Found." });
+  } else {
+    res.status(500).json({ error: "Internal Server Error." });
   }
 });
 
@@ -43,8 +52,10 @@ recipes.delete("/:id", async (req, res) => {
   const recipe = await deleteRecipe(req.params.id);
   if (recipe.id) {
     res.status(200).json(recipe);
-  } else {
+  } else if (recipe.received == 0) {
     res.status(404).json({ error: "Recipe not Found." });
+  } else {
+    res.status(500).json({ error: "Internal Server Error." });
   }
 });
 
@@ -79,11 +90,13 @@ recipes.put(
   async (req, res) => {
     const { id } = req.params;
     const recipe = await updateRecipe(id, req.body);
-    console.log(req.body);
     if (recipe.id) {
       res.status(200).json(recipe);
+    }
+    if (recipe.received == 0) {
+      res.status(404).json({ error: "Recipe not Found." });
     } else {
-      res.status(500).json({ error: "Someting went wrong!" });
+      res.status(500).json({ error: "Internal Server Error." });
     }
   }
 );

@@ -3,7 +3,10 @@ const db = require("../db/dbConfig.js");
 
 async function getAllRecipes() {
   try {
-    const recipies = await db.many("SELECT * FROM recipes;");
+    // const recipies = await db.many("SELECT * FROM recipes;");
+    const recipies = await db.many(
+      "SELECT id, name, image, is_favorite FROM recipes;"
+    );
     return recipies;
   } catch (error) {
     return error;
@@ -58,10 +61,27 @@ async function updateRecipe(id, recipe) {
   }
 }
 
+async function searchRecipeByIngredient(ingredients) {
+  const queryStr =
+    "SELECT * FROM recipes " +
+    "WHERE EXISTS ( " +
+    "SELECT 1 FROM unnest(ingredients) AS ingredient WHERE " +
+    `${ingredients
+      .map((ingredient) => `ingredient ILIKE '%${ingredient}%'`)
+      .join(" OR ")});`;
+  try {
+    const recipes = await db.any(queryStr);
+    return recipes;
+  } catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
   getAllRecipes,
   getRecipeByID,
   deleteRecipe,
   createRecipe,
   updateRecipe,
+  searchRecipeByIngredient,
 };

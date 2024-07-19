@@ -1,5 +1,4 @@
 // validators/recipesValidators.jsvalidators/recipesValidators.js
-
 function validateName(req, res, next) {
   if (req.method != "POST" && !req.body.name) {
     req.body.name = undefined;
@@ -12,6 +11,7 @@ function validateName(req, res, next) {
     next();
   }
 }
+
 function validateImage(req, res, next) {
   if (!req.body.image) {
     req.body.image = undefined;
@@ -22,6 +22,7 @@ function validateImage(req, res, next) {
     next();
   }
 }
+
 function validateIngredients(req, res, next) {
   if (req.method != "POST" && !req.body.ingredients) {
     req.body.ingredients = undefined;
@@ -36,6 +37,7 @@ function validateIngredients(req, res, next) {
     next();
   }
 }
+
 function validateInstructions(req, res, next) {
   if (req.method != "POST" && !req.body.name) {
     req.body.name = undefined;
@@ -50,6 +52,7 @@ function validateInstructions(req, res, next) {
     next();
   }
 }
+
 function validateServing(req, res, next) {
   if (!req.body.serving) {
     req.body.serving = undefined;
@@ -62,6 +65,7 @@ function validateServing(req, res, next) {
     next();
   }
 }
+
 function validatePrepareTime(req, res, next) {
   if (!req.body.prepare_time) {
     req.body.prepare_time = undefined;
