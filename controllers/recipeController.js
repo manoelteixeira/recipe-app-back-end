@@ -23,13 +23,13 @@ const {
 
 recipes.get("/", async (req, res) => {
   let allRecipes = [];
-  if (req.query) {
+
+  if (req.query.ingredients) {
     const ingredients = req.query.ingredients.split(" ");
     allRecipes = await searchRecipeByIngredient(ingredients);
   } else {
     allRecipes = await getAllRecipes();
   }
-  console.log(allRecipes);
   if (Array.isArray(allRecipes)) {
     res.status(200).json(allRecipes);
   } else {
@@ -39,7 +39,6 @@ recipes.get("/", async (req, res) => {
 
 recipes.get("/:id", async (req, res) => {
   const recipe = await getRecipeByID(req.params.id);
-  console.log(recipe);
   if (recipe.id) {
     res.status(200).json(recipe);
   } else if (recipe.received == 0) {
@@ -91,11 +90,13 @@ recipes.put(
   async (req, res) => {
     const { id } = req.params;
     const recipe = await updateRecipe(id, req.body);
-    console.log(req.body);
     if (recipe.id) {
       res.status(200).json(recipe);
+    }
+    if (recipe.received == 0) {
+      res.status(404).json({ error: "Recipe not Found." });
     } else {
-      res.status(500).json({ error: "Someting went wrong!" });
+      res.status(500).json({ error: "Internal Server Error." });
     }
   }
 );

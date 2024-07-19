@@ -3,7 +3,10 @@ const db = require("../db/dbConfig.js");
 
 async function getAllRecipes() {
   try {
-    const recipies = await db.many("SELECT * FROM recipes;");
+    // const recipies = await db.many("SELECT * FROM recipes;");
+    const recipies = await db.many(
+      "SELECT id, name, image, is_favorite FROM recipes;"
+    );
     return recipies;
   } catch (error) {
     return error;

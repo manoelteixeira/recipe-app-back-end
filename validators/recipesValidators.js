@@ -1,5 +1,4 @@
 // validators/recipesValidators.jsvalidators/recipesValidators.js
-
 function validateName(req, res, next) {
   if (req.method != "POST" && !req.body.name) {
     req.body.name = undefined;
