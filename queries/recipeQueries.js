@@ -63,7 +63,8 @@ async function updateRecipe(id, recipe) {
 
 async function searchRecipeByIngredient(ingredients) {
   const queryStr =
-    "SELECT * FROM recipes " +
+    "SELECT id, name, image, is_favorite, serving, prepare_time " +
+    "FROM recipes " +
     "WHERE EXISTS ( " +
     "SELECT 1 FROM unnest(ingredients) AS ingredient WHERE " +
     `${ingredients
