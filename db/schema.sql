@@ -14,4 +14,3 @@ CREATE TABLE recipes (
   "prepare_time" INTEGER,
   "is_favorite" BOOLEAN DEFAULT FALSE
 );
-

@@ -4,9 +4,9 @@
 INSERT INTO recipes(name,image,ingredients,instructions,serving,prepare_time,is_favorite) VALUES
 ('Adana Kebap',
 'https://headbangerskitchen.com/wp-content/uploads/2022/12/ADANAKEBAB-H1.jpg',
+'{"Ground beef","Red Bell Pepper", "Salt", Urfa Pepper}',
 '{
-"Ground beef","Red Bell Pepper", "Salt", Urfa Pepper}',
-'{"Start by either hand chopping or using a chopper to chop the peppers.",
+"Start by either hand chopping or using a chopper to chop the peppers.",
 "Season the mixture with salt, urfa pepper. Then run it through the food processor for a pastier more melt in the mouth kebab or leave as is after mixing for a more meaty kebab texture.",
 "Leave in the fridge to get cold. Once cool then skewer the meat and cook.",
 "Best to pan fry using some oil on a grill pan. Alternatively if you can cook over a barbecue or coals then do that, baste with some butter while cooking if you are.",
@@ -36,5 +36,3 @@ Serve with the salad once cooked. They don’t take very long to cook, the meat 
 }',
 3, 80, FALSE);
 
-
--- ('test','test','{"test","test"}','test',2,2,true);
